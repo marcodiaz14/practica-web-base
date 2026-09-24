@@ -41,8 +41,42 @@ mostrarProductos(productos)
 // ------------------------------------------------------------
 const pedido = []
 
-// Escribe aquí tu código del Ejercicio 3
 
+catalogo.addEventListener('click', (evento) => {
+  const boton = evento.target.closest('button[data-id]');
+  if (!boton) return;
+
+  const id = Number(boton.dataset.id);
+
+  const productoEncontrado = productos.find(p => p.id === id);
+
+  if (productoEncontrado) {
+    pedido.push(productoEncontrado);
+
+    mostrarPedido();
+  }
+});
+const listaPedido = document.getElementById('lista-pedido');
+const totalElemento = document.getElementById('total');
+
+function mostrarPedido() {
+  // 1. Dibuja cada producto del pedido dentro de #lista-pedido usando .map() y .join('')
+  listaPedido.innerHTML = pedido.map(p => `
+    <li class="flex justify-between items-center py-2 border-b text-gray-700">
+      <span>${p.nombre}</span>
+      <span class="font-bold text-indigo-600">$${p.precio}</span>
+    </li>
+  `).join('');
+
+  const total = pedido.reduce((suma, p) => suma + p.precio, 0);
+
+  totalElemento.textContent = `Total: $${total}`;
+}
+const btnVaciar = document.getElementById('btn-vaciar');
+btnVaciar.addEventListener('click', () => {
+  pedido.length = 0;
+  mostrarPedido();
+});
 // ------------------------------------------------------------
 // EJERCICIO 4 — Filtrar por categoría
 // Botones de categoría que llamen a mostrarProductos() con
