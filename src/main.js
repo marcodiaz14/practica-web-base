@@ -121,3 +121,111 @@ contenedorFiltros.addEventListener('click', (evento) => {
     mostrarProductos(productosFiltrados);
   }
 });
+catalogo.addEventListener('click', (evento) => {
+  const boton = evento.target.closest('button[data-id]');
+  if (!boton) return;
+
+  const id = Number(boton.dataset.id);
+  const productoEncontrado = productos.find(p => p.id === id);
+
+  if (productoEncontrado) {
+    // 1. Buscamos si el producto ya está en el pedido
+    const itemEnPedido = pedido.find(item => item.producto.id === id);
+
+    if (itemEnPedido) {
+      // Si ya existe, solo incrementamos su cantidad
+      itemEnPedido.cantidad += 1;
+    } else {
+      // Si no existe, lo agregamos con cantidad inicial de 1
+      pedido.push({
+        producto: productoEncontrado,
+        cantidad: 1
+      });
+    }
+
+    // 2. Redibujamos el pedido
+    mostrarPedido();
+  }
+});
+// Selección de elementos del DOM
+const formCliente = document.getElementById('form-cliente');
+
+const inputNombre = document.getElementById('nombre');
+const inputTelefono = document.getElementById('telefono');
+const inputCorreo = document.getElementById('correo');
+
+const errorNombre = document.getElementById('error-nombre');
+const errorTelefono = document.getElementById('error-telefono');
+const errorCorreo = document.getElementById('error-correo');
+
+// Escuchar el evento submit del formulario
+formCliente.addEventListener('submit', (evento) => {
+  // Evitar que la página se recargue al enviar el formulario
+  evento.preventDefault();
+
+  // Expresiones regulares para validación
+  const regexTelefono = /^\d{10}$/;
+  const regexCorreo = /^\S+@\S+\.\S+$/;
+
+  // Obtener valores limpios
+  const nombreVal = inputNombre.value.trim();
+  const telefonoVal = inputTelefono.value.trim();
+  const correoVal = inputCorreo.value.trim();
+
+  let esValido = true;
+
+ 
+  if (nombreVal === '') {
+    mostrarError(inputNombre, errorNombre, 'El nombre no puede estar vacío.');
+    esValido = false;
+  } else {
+    limpiarError(inputNombre, errorNombre);
+  }
+
+
+  if (!regexTelefono.test(telefonoVal)) {
+    mostrarError(inputTelefono, errorTelefono, 'El teléfono debe tener exactamente 10 dígitos.');
+    esValido = false;
+  } else {
+    limpiarError(inputTelefono, errorTelefono);
+  }
+
+  
+  if (!regexCorreo.test(correoVal)) {
+    mostrarError(inputCorreo, errorCorreo, 'Ingresa un correo electrónico válido (ejemplo@dominio.com).');
+    esValido = false;
+  } else {
+    limpiarError(inputCorreo, errorCorreo);
+  }
+
+  
+  const listaPedido = document.getElementById('lista-pedido');
+  // Se verifica si hay elementos <li> dentro de la lista del pedido
+  if (!listaPedido || listaPedido.children.length === 0) {
+    alert('Tu pedido está vacío. Agrega productos o servicios antes de confirmar.');
+    esValido = false;
+  }
+
+  if (esValido) {
+    alert('¡Pedido confirmado con éxito!');
+    // Aquí puedes vaciar el carrito o resetear el formulario si lo necesitas:
+    // formCliente.reset();
+  }
+});
+
+// Función auxiliar para mostrar mensaje de error y marcar el campo en rojo
+function mostrarError(input, elementoError, mensaje) {
+  elementoError.textContent = mensaje;
+  elementoError.classList.remove('hidden');
+  input.classList.add('border-red-500');
+  input.classList.remove('border-gray-300');
+}
+
+// Función auxiliar para ocultar el mensaje de error y restaurar el borde
+function limpiarError(input, elementoError) {
+  elementoError.textContent = '';
+  elementoError.classList.add('hidden');
+  input.classList.remove('border-red-500');
+  input.classList.add('border-gray-300');
+}
+ 
