@@ -28,72 +28,65 @@
         </button>
       </div>
 
-      <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <!-- Catálogo de productos/servicios -->
+      <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         <!-- Tarjetas dinámicas -->
       </div>
 
-     <aside class="bg-white p-6 rounded-lg shadow-md mt-8 max-w-md mx-auto">
-  <h2 class="text-xl font-semibold mb-4 text-center">Mi pedido</h2>
-  
-  <ul id="lista-pedido" class="divide-y divide-gray-200 mb-4"></ul>
-  
-  <p id="total" class="font-bold text-lg text-right mb-4">Total: $0.00</p>
-  
-  <button id="btn-vaciar" type="button" class="w-full bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition mb-6">
-    Vaciar
-  </button>
-
-  <!-- Formulario del Cliente -->
-  <form id="form-cliente" class="space-y-4 border-t pt-4" novalidate>
-    <h3 class="font-semibold text-lg mb-2 text-gray-700">Datos de contacto</h3>
-
-    <!-- Campo Nombre -->
-    <div>
-      <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
-      <input 
-        type="text" 
-        id="nombre" 
-        name="nombre" 
-        placeholder="Ej. Juan Pérez" 
-        class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <p id="error-nombre" class="text-sm text-red-600 hidden mt-1"></p>
-    </div>
-
-    <!-- Campo Teléfono -->
-    <div>
-      <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-      <input 
-        type="tel" 
-        id="telefono" 
-        name="telefono" 
-        placeholder="Ej. 5512345678" 
-        class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <p id="error-telefono" class="text-sm text-red-600 hidden mt-1"></p>
-    </div>
-
-    <!-- Campo Correo -->
-    <div>
-      <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
-      <input 
-        type="email" 
-        id="correo" 
-        name="correo" 
-        placeholder="ejemplo@correo.com" 
-        class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <p id="error-correo" class="text-sm text-red-600 hidden mt-1"></p>
-    </div>
-
-    <button 
-      type="submit" 
-      class="w-full bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700 transition"
-    >
-      Confirmar pedido
+      <!-- NUEVA SECCIÓN: Pedidos registrados -->
+      <section class="my-8 p-6 bg-white rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-4 text-center">Pedidos registrados</h2>
+        <div id="pedidos-registrados" class="space-y-4">
+          <!-- Aquí se insertarán dinámicamente los pedidos confirmados -->
+        </div>
+        <div id="filtros-pedidos" class="flex flex-wrap gap-2 mb-6 justify-center">
+    <button data-filtro-estado="Todos" class="btn-filtro-pedido bg-gray-800 text-white px-3 py-1.5 rounded-full text-sm font-semibold transition">
+      Todos (<span id="cant-todos">0</span>)
     </button>
-  </form>
-</aside>
+    <button data-filtro-estado="Pendiente" class="btn-filtro-pedido bg-gray-200 text-gray-800 border px-3 py-1.5 rounded-full text-sm font-semibold hover:bg-gray-300 transition">
+      Pendiente (<span id="cant-pendiente">0</span>)
+    </button>
+    <button data-filtro-estado="En preparación" class="btn-filtro-pedido bg-gray-200 text-gray-800 border px-3 py-1.5 rounded-full text-sm font-semibold hover:bg-gray-300 transition">
+      En preparación (<span id="cant-preparacion">0</span>)
+    </button>
+    <button data-filtro-estado="Entregado" class="btn-filtro-pedido bg-gray-200 text-gray-800 border px-3 py-1.5 rounded-full text-sm font-semibold hover:bg-gray-300 transition">
+      Entregado (<span id="cant-entregado">0</span>)
+    </button>
+  </div>
+
+  <div id="pedidos-registrados" class="space-y-4">
+    <!-- Se dibuja dinámicamente -->
+  </div>
+      </section>
+      
+
+      <!-- Panel de Mi Pedido -->
+      <aside class="bg-white p-6 rounded-lg shadow-md mt-8 max-w-md mx-auto">
+        <h2 class="text-xl font-semibold mb-4 text-center">Mi pedido</h2>
+        <ul id="lista-pedido" class="divide-y divide-gray-200 mb-4"></ul>
+        <p id="total" class="font-bold text-lg text-right mb-4">Total: $0.00</p>
+        <button id="btn-vaciar" type="button" class="w-full bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition mb-6">Vaciar</button>
+
+        <form id="form-cliente" class="space-y-4 border-t pt-4" novalidate>
+          <h3 class="font-semibold text-lg mb-2 text-gray-700">Datos de contacto</h3>
+          <div>
+            <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <p id="error-nombre" class="text-sm text-red-600 hidden mt-1"></p>
+          </div>
+          <div>
+            <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Ej. 5512345678" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <p id="error-telefono" class="text-sm text-red-600 hidden mt-1"></p>
+          </div>
+          <div>
+            <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <p id="error-correo" class="text-sm text-red-600 hidden mt-1"></p>
+          </div>
+          <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700 transition">Confirmar pedido</button>
+        </form>
+      </aside>
     </main>
 
     <footer class="bg-gray-800 text-white text-center py-4 mt-8">
